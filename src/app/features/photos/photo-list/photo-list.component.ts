@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, signal} from '@angular/core';
 import {FlexModule} from '@angular/flex-layout';
 import {PhotoCardComponent} from '../../../shared/components/photo-card/photo-card.component';
 import {NgForOf} from '@angular/common';
@@ -17,13 +17,12 @@ import {PhotosService} from '../services/photos.service';
 })
 export class PhotoListComponent {
 
-  photos: any = [];
+  photos = signal<any[]>([]);
 
   constructor(private photoService: PhotosService) {
     this.photoService.getPhotos()
       .subscribe((photos) => {
-        console.log(photos);
-        this.photos = photos;
+        this.photos.set(photos);
       })
   }
 }
